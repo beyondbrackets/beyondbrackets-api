@@ -10,6 +10,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -35,6 +37,7 @@ public class Post {
 	@JsonProperty
 	private String title;
 	@JsonProperty
+	@Type(type="text")
 	private String contents;
 	
 	
