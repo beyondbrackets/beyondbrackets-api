@@ -21,8 +21,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 	    {
 	        @NamedQuery(
 	            name = "io.beyondbrackets.api.Post.findAll",
-	            query = "SELECT p FROM Post p"
-	        )
+	            query = "SELECT p FROM Post p ORDER BY p.date DESC"
+	        ),
+	        @NamedQuery(
+		            name = "io.beyondbrackets.api.Post.findLatest",
+		            query = "SELECT p FROM Post p WHERE p.date = (SELECT MAX(m.date) FROM Post m)"
+		        )  
 	    }
 	)
 public class Post {

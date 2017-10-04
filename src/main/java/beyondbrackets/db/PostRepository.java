@@ -19,6 +19,10 @@ public class PostRepository extends AbstractDAO<Post> {
         return Optional.ofNullable(get(id));
     }
 
+    public Optional<Post> findLatest() {
+        return Optional.ofNullable(uniqueResult(namedQuery("io.beyondbrackets.api.Post.findLatest")));
+    }
+
     public Post create(Post post) {
         return persist(post);
     }

@@ -16,9 +16,9 @@ import io.dropwizard.hibernate.UnitOfWork;
 @Path("posts")
 @Produces(MediaType.APPLICATION_JSON)
 public class PostResource {
-	
+
 	private final PostRepository postRepository;
-	
+
 	public PostResource(PostRepository postRepository) {
 		this.postRepository = postRepository;
 	}
@@ -28,19 +28,28 @@ public class PostResource {
 	public List<Post> allPosts() {
 		return postRepository.findAll();
 	}
-	
+
+	@GET
+	@UnitOfWork
+	@Path("/latest")
+	public Post findLatest() {
+		Post post = postRepository.findLatest().orElseThrow(() -> new IllegalStateException("No Post Found"));
+		System.err.println(post.getTitle());
+		return post;
+	}
+
 	@GET
 	@UnitOfWork
 	@Path("/{url}")
 	public Post findOne(@PathParam("url") String url) {
 		return postRepository.findByUrl(url);
 	}
-	
-    @POST
-    @UnitOfWork
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Post createPerson(Post post) {
-        return postRepository.create(post);
-    }
-	
+
+	@POST
+	@UnitOfWork
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Post createPerson(Post post) {
+		return postRepository.create(post);
+	}
+
 }
